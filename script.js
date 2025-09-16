@@ -325,22 +325,22 @@ document.addEventListener('DOMContentLoaded', () => {
         attachmentBtn.disabled = isBusy || isRecording;
         fileUploadInput.disabled = isBusy || isRecording;
 
-        sendButton.classList.remove('bg-neutral-500', 'hover:bg-neutral-700', 'bg-neutral-500/10', 'hover:bg-neutral-500/30', 'bg-red-500/10', 'hover:bg-red-700/30');
+        sendButton.classList.remove('bg-zinc-700', 'hover:bg-zinc-600', 'bg-zinc-500', 'hover:bg-zinc-400', 'bg-red-500/10', 'hover:bg-red-700/30');
         sendButtonIcon.setAttribute('fill', 'none');
-        sendButtonIcon.setAttribute('stroke', '#444d5cff');
+        sendButtonIcon.setAttribute('stroke', '#27272a');
         sendButtonIcon.setAttribute('stroke-width', '3');
 
         if (isBusy) {
             sendButtonIcon.innerHTML = stopIconSVG;
             sendButton.title = "Parar geração";
-            sendButton.classList.add('bg-neutral-500/10', 'hover:bg-neutral-500/30');
-            sendButtonIcon.setAttribute('stroke', '#5c5a86ff');
+            sendButton.classList.add('bg-zinc-500', 'hover:bg-zinc-400');
+            sendButtonIcon.setAttribute('stroke', '#27272a');
             sendButtonIcon.setAttribute('stroke-width', '10');
 
         } else if (isRecording) {
             sendButtonIcon.innerHTML = micIconSVG;
             sendButton.title = "Solte para parar de gravar e enviar";
-            sendButton.classList.add('bg-neutral-500/10', 'hover:bg-neutral-500/30');
+            sendButton.classList.add('bg-zinc-500', 'hover:bg-zinc-400',);
             sendButton.classList.add('bg-red-500/10', 'hover:bg-red-700/30');
             sendButtonIcon.setAttribute('stroke', '#d40404ff');
             sendButtonIcon.setAttribute('stroke-width', '2');
@@ -348,13 +348,13 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (hasText) {
             sendButtonIcon.innerHTML = sendIconSVG;
             sendButton.title = "Enviar mensagem";
-            sendButton.classList.add('bg-neutral-200', 'hover:bg-neutral-300');
+            sendButton.classList.add('bg-zinc-500', 'hover:bg-zinc-400');
 
         } else {
             sendButtonIcon.innerHTML = micIconSVG;
             sendButton.title = "Pressione e segure para gravar";
-            sendButton.classList.add('bg-neutral-500/10', 'hover:bg-neutral-500/30');
-            sendButtonIcon.setAttribute('stroke', '#79798aff');
+            sendButton.classList.add('bg-zinc-500', 'hover:bg-zinc-400',);
+            sendButtonIcon.setAttribute('stroke', '#27272a');
             sendButtonIcon.setAttribute('stroke-width', '2');
         }
 
@@ -421,7 +421,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const imageUrl = URL.createObjectURL(attachment);
                     bubbleContent += `<img src="${imageUrl}" alt="Anexo" class="rounded-lg max-w-xs mb-2" onload="URL.revokeObjectURL(this.src)">`;
                 
-                // --- NOVO BLOCO ADICIONADO ---
                 // Se o anexo for um PDF
                 } else if (attachment.type === 'application/pdf') {
                     bubbleContent += `
@@ -435,7 +434,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     `;
                 }
-                // --- FIM DO NOVO BLOCO ---
             }
 
             // Etapa 2: Adiciona a mensagem de texto, se houver
@@ -443,15 +441,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 bubbleContent += `<p>${text}</p>`;
             }
 
-            // Etapa 3: Monta o balão de chat completo 
             messageWrapper.innerHTML = `
-            <div class="w-14 h-8 rounded-full bg-emerald-300 flex-shrink-0 flex items-center justify-center font-bold">Você</div>    
-            <div class="bg-emerald-300/50 rounded-xl p-4 max-w-2xl">${bubbleContent}</div>`;
+            <div class="bg-zinc-700 rounded-tl-xl rounded-bl-xl rounded-br-xl rounded-tr-sm p-2 max-w-2xl">${bubbleContent}</div>`;
 
         } else { // A lógica para as mensagens do 'bot' não muda
             const renderedHtml = marked.parse(text);
             messageWrapper.classList.add('justify-start','items-start');
-            messageWrapper.innerHTML = `<div class="w-32 h-8 rounded-full bg-white flex-shrink-0 flex items-center justify-center font-bold">Assistente</div><div class="bg-white rounded-xl p-4 max-w-3xl prose prose-invert prose-slate">${renderedHtml}</div>`;
+            messageWrapper.innerHTML = `<div class="pl-4 flex-shrink-0 flex items-center justify-center font-bold">Assistente</div><div class="pl-4 pr-4 pb-4 w-100 prose prose-invert">${renderedHtml}</div>`;
         }
 
         chatContainer.appendChild(messageWrapper);
@@ -462,7 +458,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const thinkingWrapper = document.createElement('div');
         thinkingWrapper.id = 'thinking-indicator';
         thinkingWrapper.className = 'flex items-start gap-4 justify-start';
-        thinkingWrapper.innerHTML = `<div class="w-32 h-8 rounded-full bg-neutral-300 flex-shrink-0 flex items-center justify-center font-bold">Assistente</div><div class="bg-neutral-200/80 rounded-xl p-4 max-w-2xl flex items-center space-x-2"><span class="w-2.5 h-2.5 bg-slate-400 rounded-full animate-pulse" style="animation-delay: 0s;"></span><span class="w-2.5 h-2.5 bg-slate-400 rounded-full animate-pulse" style="animation-delay: 0.2s;"></span><span class="w-2.5 h-2.5 bg-slate-400 rounded-full animate-pulse" style="animation-delay: 0.4s;"></span></div>`;
+        thinkingWrapper.innerHTML = `<div class="p-4 max-w-2xl flex items-center space-x-2"><span class="w-2.5 h-2.5 bg-zinc-400 rounded-full animate-pulse" style="animation-delay: 0s;"></span><span class="w-2.5 h-2.5 bg-zinc-400 rounded-full animate-pulse" style="animation-delay: 0.2s;"></span><span class="w-2.5 h-2.5 bg-zinc-400 rounded-full animate-pulse" style="animation-delay: 0.4s;"></span></div>`;
         chatContainer.appendChild(thinkingWrapper);
         scrollToBottom();
     }
